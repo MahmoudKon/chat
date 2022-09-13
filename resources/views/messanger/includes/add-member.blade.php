@@ -67,7 +67,7 @@
                     <div class="col-auto">
                         <div class="avatar ">
 
-                            <img class="avatar-img" src="assets/img/avatars/6.jpg" alt="">
+                            {{-- <img class="avatar-img" src="assets/img/avatars/6.jpg" alt=""> --}}
 
 
                         </div>
@@ -95,7 +95,7 @@
                     <div class="col-auto">
                         <div class="avatar ">
 
-                            <img class="avatar-img" src="assets/img/avatars/5.jpg" alt="">
+                            {{-- <img class="avatar-img" src="assets/img/avatars/5.jpg" alt=""> --}}
 
 
                         </div>
@@ -147,7 +147,7 @@
                     <div class="col-auto">
                         <div class="avatar avatar-online">
 
-                            <img class="avatar-img" src="assets/img/avatars/8.jpg" alt="">
+                            {{-- <img class="avatar-img" src="assets/img/avatars/8.jpg" alt=""> --}}
 
 
                         </div>
@@ -175,7 +175,7 @@
                     <div class="col-auto">
                         <div class="avatar ">
 
-                            <img class="avatar-img" src="assets/img/avatars/11.jpg" alt="">
+                            {{-- <img class="avatar-img" src="assets/img/avatars/11.jpg" alt=""> --}}
 
 
                         </div>
@@ -279,7 +279,7 @@
                     <div class="col-auto">
                         <div class="avatar ">
 
-                            <img class="avatar-img" src="assets/img/avatars/4.jpg" alt="">
+                            {{-- <img class="avatar-img" src="assets/img/avatars/4.jpg" alt=""> --}}
 
 
                         </div>
@@ -303,7 +303,7 @@
                     <div class="col-auto">
                         <div class="avatar avatar-online">
 
-                            <img class="avatar-img" src="assets/img/avatars/7.jpg" alt="">
+                            {{-- <img class="avatar-img" src="assets/img/avatars/7.jpg" alt=""> --}}
 
 
                         </div>

@@ -20,7 +20,7 @@ class MessageCreated implements ShouldBroadcast
      *
      * @return void
      */
-    public function __construct(public Message $message)
+    public function __construct(public Message $message, public int $user_id)
     {
         //
     }
@@ -32,8 +32,6 @@ class MessageCreated implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        // return new Channel('new-message');
-        $user = $this->message->users()->where('user_id', '<>', $this->message->user_id)->first();
-        return new PrivateChannel('new-message.'.$user->id);
+        return new PrivateChannel("new-message.{$this->user_id}");
     }
 }

@@ -8,9 +8,11 @@
             <div class="chat-body-inner" style="padding-bottom: 45px">
                 <div class="py-6 py-lg-12" id="conversation_{{ $conversation->id }}">
 
-                    @foreach ($conversation->messages->sortBy('id') as $message)
-                        @include('messanger.chat-window.message')
-                    @endforeach
+                    @if ($conversation)
+                        @foreach ($conversation->messages->sortBy('id') as $message)
+                            @include('messanger.chat-window.message')
+                        @endforeach
+                    @endif
 
                 </div>
             </div>

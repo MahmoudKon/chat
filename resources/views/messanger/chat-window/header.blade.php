@@ -21,14 +21,14 @@
                 <div class="col-12 col-xl-6">
                     <div class="row align-items-center gx-5">
                         <div class="col-auto">
-                            <div class="avatar d-none d-xl-inline-block">
+                            <div class="avatar d-none d-xl-inline-block {{ $user->isOnline() ? 'avatar-online' : '' }} online-status-{{ $conversation->users[0]->id ?? '' }}">
                                 <img class="avatar-img" src="{{ $user->image }}" alt="">
                             </div>
                         </div>
 
                         <div class="col overflow-hidden">
                             <h5 class="text-truncate">{{ $user->name }}</h5>
-                            <p class="text-truncate">Online</p>
+                            <p class="text-truncate">{{ $user->isOnline() ? 'Online' : '' }}</p>
                         </div>
                     </div>
                 </div>

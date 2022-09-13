@@ -1,8 +1,7 @@
 <!-- Chat: Footer -->
 <div class="chat-footer pb-3 pb-lg-7 position-absolute bottom-0 start-0">
     <!-- Chat: Files -->
-    <div class="dz-preview bg-dark" id="dz-preview-row" data-horizontal-scroll="">
-    </div>
+    <div class="dz-preview bg-dark" id="dz-preview-row" data-horizontal-scroll=""></div>
     <!-- Chat: Files -->
 
     <!-- Chat: Form -->

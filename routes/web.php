@@ -26,6 +26,7 @@ Auth::routes();
 Route::middleware('auth')->group(function() {
 
     Route::get('/', [ConversationController::class, 'index'])->name('conversations.index');
+    Route::get('list/users', [ConversationController::class, 'users'])->name('conversations.users');
 
 
     Route::get('conversations/create', [ConversationController::class, 'create'])->name('conversations.create');

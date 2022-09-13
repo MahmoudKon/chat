@@ -28,7 +28,8 @@ class MessageController extends Controller
 
     public function newChat(User $user)
     {
-        return view('backend.massenger.includes.room', compact('user'));
+        $conversation = new Conversation();
+        return view('messanger.chat-window.index', compact('user', 'conversation'));
     }
 
     public function store(MessageRequest $request)
@@ -48,12 +49,19 @@ class MessageController extends Controller
             ]);
 
             $conversation->update(['last_message_id' => $message->id]);
-
             DB::commit();
 
-            $message->load('user');
-            broadcast(new MessageCreated($message));
+            $message->load(['user', 'conversation', 'conversation.users' => function($query) { $query->where('user_id', '<>', auth()->id()); }]);
+            foreach ($conversation->users()->where('user_id', '<>', auth()->id())->pluck('user_id') as $user_id) {
+                broadcast(new MessageCreated($message, $user_id));
+            }
+
+            $new_conversation = false;
+            if (! $request->conversation_id) {
+                $new_conversation = view('messanger.includes.conversations', ['conversations' => [$message->conversation]])->render();
+            }
             return [
+                'new_conversation' => $new_conversation,
                 'message' => $message,
                 'view'    => view('messanger.chat-window.message', compact('message'))->render()
             ];

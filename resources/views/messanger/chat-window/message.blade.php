@@ -1,5 +1,5 @@
 <div class="message {{ $message->user_id == auth()->id() ? 'message-out' : '' }}">
-    <a href="#" data-bs-toggle="modal" data-bs-target="#modal-user-profile" class="avatar avatar-online avatar-responsive">
+    <a href="#" data-bs-toggle="modal" data-bs-target="#modal-user-profile" class="avatar avatar-responsive">
         <img class="avatar-img" src="{{ $message->user->image }}" alt="">
     </a>
 

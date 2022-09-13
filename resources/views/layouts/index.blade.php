@@ -109,10 +109,10 @@
                     <li class="nav-item">
                         <a href="#" class="nav-link p-0 mt-lg-2" data-bs-toggle="modal" data-bs-target="#modal-profile">
                             <div class="avatar avatar-online mx-auto d-none d-xl-block">
-                                <img class="avatar-img" src="assets/img/avatars/1.jpg" alt="">
+                                {{-- <img class="avatar-img" src="assets/img/avatars/1.jpg" alt=""> --}}
                             </div>
                             <div class="avatar avatar-online avatar-xs d-xl-none">
-                                <img class="avatar-img" src="assets/img/avatars/1.jpg" alt="">
+                                {{-- <img class="avatar-img" src="assets/img/avatars/1.jpg" alt=""> --}}
                             </div>
                         </a>
                     </li>
@@ -262,7 +262,7 @@
                                                             <div class="col-auto">
                                                                 <div class="avatar ">
 
-                                                                        <img class="avatar-img" src="assets/img/avatars/6.jpg" alt="">
+                                                                        {{-- <img class="avatar-img" src="assets/img/avatars/6.jpg" alt=""> --}}
 
 
                                                                 </div>
@@ -295,7 +295,7 @@
                                                             <div class="col-auto">
                                                                 <div class="avatar ">
 
-                                                                        <img class="avatar-img" src="assets/img/avatars/5.jpg" alt="">
+                                                                        {{-- <img class="avatar-img" src="assets/img/avatars/5.jpg" alt=""> --}}
 
 
                                                                 </div>
@@ -355,7 +355,7 @@
                                                             <div class="col-auto">
                                                                 <div class="avatar avatar-online">
 
-                                                                        <img class="avatar-img" src="assets/img/avatars/8.jpg" alt="">
+                                                                        {{-- <img class="avatar-img" src="assets/img/avatars/8.jpg" alt=""> --}}
 
 
                                                                 </div>
@@ -415,7 +415,7 @@
                                                             <div class="col-auto">
                                                                 <div class="avatar ">
 
-                                                                        <img class="avatar-img" src="assets/img/avatars/11.jpg" alt="">
+                                                                        {{-- <img class="avatar-img" src="assets/img/avatars/11.jpg" alt=""> --}}
 
 
                                                                 </div>
@@ -481,7 +481,7 @@
                                                             <div class="col-auto">
                                                                 <div class="avatar ">
 
-                                                                        <img class="avatar-img" src="assets/img/avatars/4.jpg" alt="">
+                                                                        {{-- <img class="avatar-img" src="assets/img/avatars/4.jpg" alt=""> --}}
 
 
                                                                 </div>
@@ -508,7 +508,7 @@
                                                             <div class="col-auto">
                                                                 <div class="avatar avatar-online">
 
-                                                                        <img class="avatar-img" src="assets/img/avatars/7.jpg" alt="">
+                                                                        {{-- <img class="avatar-img" src="assets/img/avatars/7.jpg" alt=""> --}}
 
 
                                                                 </div>
@@ -600,7 +600,7 @@
                                                     <div class="col-auto">
                                                         <a href="#" class="avatar ">
 
-                                                            <img class="avatar-img" src="assets/img/avatars/6.jpg" alt="">
+                                                            {{-- <img class="avatar-img" src="assets/img/avatars/6.jpg" alt=""> --}}
 
 
                                                         </a>
@@ -650,7 +650,7 @@
                                                     <div class="col-auto">
                                                         <a href="#" class="avatar ">
 
-                                                            <img class="avatar-img" src="assets/img/avatars/5.jpg" alt="">
+                                                            {{-- <img class="avatar-img" src="assets/img/avatars/5.jpg" alt=""> --}}
 
 
                                                         </a>
@@ -744,7 +744,7 @@
                                                     <div class="col-auto">
                                                         <a href="#" class="avatar avatar-online">
 
-                                                            <img class="avatar-img" src="assets/img/avatars/8.jpg" alt="">
+                                                            {{-- <img class="avatar-img" src="assets/img/avatars/8.jpg" alt=""> --}}
 
 
                                                         </a>
@@ -838,7 +838,7 @@
                                                     <div class="col-auto">
                                                         <a href="#" class="avatar ">
 
-                                                            <img class="avatar-img" src="assets/img/avatars/11.jpg" alt="">
+                                                            {{-- <img class="avatar-img" src="assets/img/avatars/11.jpg" alt=""> --}}
 
 
                                                         </a>
@@ -938,7 +938,7 @@
                                                     <div class="col-auto">
                                                         <a href="#" class="avatar ">
 
-                                                            <img class="avatar-img" src="assets/img/avatars/4.jpg" alt="">
+                                                            {{-- <img class="avatar-img" src="assets/img/avatars/4.jpg" alt=""> --}}
 
 
                                                         </a>
@@ -982,7 +982,7 @@
                                                     <div class="col-auto">
                                                         <a href="#" class="avatar avatar-online">
 
-                                                            <img class="avatar-img" src="assets/img/avatars/7.jpg" alt="">
+                                                            {{-- <img class="avatar-img" src="assets/img/avatars/7.jpg" alt=""> --}}
 
 
                                                         </a>
@@ -1087,7 +1087,7 @@
                                                 <div class="row align-items-center gx-4">
                                                     <div class="col-auto">
                                                         <div class="avatar avatar-xs">
-                                                            <img class="avatar-img" src="assets/img/avatars/bootstrap.svg" alt="Bootstrap Community">
+                                                            {{-- <img class="avatar-img" src="assets/img/avatars/bootstrap.svg" alt="Bootstrap Community"> --}}
                                                         </div>
                                                     </div>
 
@@ -1184,11 +1184,11 @@
                                                     <div class="col-auto">
                                                         <div class="avatar-group-trigon avatar-group-trigon-sm">
                                                             <div class="avatar avatar-sm">
-                                                                <img class="avatar-img" src="assets/img/avatars/7.jpg" alt="#">
+                                                                {{-- <img class="avatar-img" src="assets/img/avatars/7.jpg" alt="#"> --}}
                                                             </div>
 
                                                             <div class="avatar avatar-sm">
-                                                                <img class="avatar-img" src="assets/img/avatars/9.jpg" alt="#">
+                                                                {{-- <img class="avatar-img" src="assets/img/avatars/9.jpg" alt="#"> --}}
                                                             </div>
 
                                                             <div class="avatar avatar-sm">
@@ -1460,7 +1460,7 @@
                                                     <div class="col-auto">
                                                         <!-- Avatar -->
                                                         <a href="#" class="avatar">
-                                                            <img class="avatar-img" src="assets/img/avatars/11.jpg" alt="">
+                                                            {{-- <img class="avatar-img" src="assets/img/avatars/11.jpg" alt=""> --}}
 
                                                             <div class="badge badge-circle bg-primary border-outline position-absolute bottom-0 end-0">
                                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
@@ -1629,7 +1629,7 @@
                                                     <div class="col-auto">
                                                         <!-- Avatar -->
                                                         <a href="#" class="avatar">
-                                                            <img class="avatar-img" src="assets/img/avatars/7.jpg" alt="">
+                                                            {{-- <img class="avatar-img" src="assets/img/avatars/7.jpg" alt=""> --}}
 
                                                             <div class="badge badge-circle bg-primary border-outline position-absolute bottom-0 end-0">
                                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-image"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
@@ -1673,7 +1673,7 @@
                                                     <div class="col-auto">
                                                         <!-- Avatar -->
                                                         <a href="#" class="avatar">
-                                                            <img class="avatar-img" src="assets/img/avatars/9.jpg" alt="">
+                                                            {{-- <img class="avatar-img" src="assets/img/avatars/9.jpg" alt=""> --}}
 
                                                             <div class="badge badge-circle bg-primary border-outline position-absolute bottom-0 end-0">
                                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-circle"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
@@ -2376,7 +2376,7 @@
                                             <div class="row align-items-center gx-5">
                                                 <div class="col-auto">
                                                     <div class="avatar d-none d-xl-inline-block">
-                                                        <img class="avatar-img" src="assets/img/avatars/bootstrap.svg" alt="">
+                                                        {{-- <img class="avatar-img" src="assets/img/avatars/bootstrap.svg" alt=""> --}}
                                                     </div>
                                                 </div>
 
@@ -2400,15 +2400,15 @@
                                                 <div class="col-auto">
                                                     <div class="avatar-group">
                                                         <a href="#" class="avatar avatar-sm" data-bs-toggle="modal" data-bs-target="#modal-user-profile">
-                                                            <img class="avatar-img" src="assets/img/avatars/1.jpg" alt="#">
+                                                            {{-- <img class="avatar-img" src="assets/img/avatars/1.jpg" alt="#"> --}}
                                                         </a>
 
                                                         <a href="#" class="avatar avatar-sm" data-bs-toggle="modal" data-bs-target="#modal-user-profile">
-                                                            <img class="avatar-img" src="assets/img/avatars/11.jpg" alt="#">
+                                                            {{-- <img class="avatar-img" src="assets/img/avatars/11.jpg" alt="#"> --}}
                                                         </a>
 
                                                         <a href="#" class="avatar avatar-sm" data-bs-toggle="modal" data-bs-target="#modal-user-profile">
-                                                            <img class="avatar-img" src="assets/img/avatars/7.jpg" alt="#">
+                                                            {{-- <img class="avatar-img" src="assets/img/avatars/7.jpg" alt="#"> --}}
                                                         </a>
 
                                                         <a href="#" class="avatar avatar-sm" data-bs-toggle="offcanvas" data-bs-target="#offcanvas-add-members" aria-controls="offcanvas-add-members">
@@ -2458,7 +2458,7 @@
                                     <!-- Message -->
                                     <div class="message">
                                         <a href="#" data-bs-toggle="modal" data-bs-target="#modal-user-profile" class="avatar avatar-responsive">
-                                            <img class="avatar-img" src="assets/img/avatars/11.jpg" alt="">
+                                            {{-- <img class="avatar-img" src="assets/img/avatars/11.jpg" alt=""> --}}
                                         </a>
 
                                         <div class="message-inner">
@@ -2563,7 +2563,7 @@
                                     <!-- Message -->
                                     <div class="message message-out">
                                         <a href="#" data-bs-toggle="modal" data-bs-target="#modal-profile" class="avatar avatar-responsive">
-                                            <img class="avatar-img" src="assets/img/avatars/1.jpg" alt="">
+                                            {{-- <img class="avatar-img" src="assets/img/avatars/1.jpg" alt=""> --}}
                                         </a>
 
                                         <div class="message-inner">
@@ -2695,7 +2695,7 @@
                                     <!-- Message -->
                                     <div class="message">
                                         <a href="#" data-bs-toggle="modal" data-bs-target="#modal-user-profile" class="avatar avatar-responsive">
-                                            <img class="avatar-img" src="assets/img/avatars/6.jpg" alt="">
+                                            {{-- <img class="avatar-img" src="assets/img/avatars/6.jpg" alt=""> --}}
                                         </a>
 
                                         <div class="message-inner">
@@ -2755,7 +2755,7 @@
                                     <!-- Message -->
                                     <div class="message message-out">
                                         <a href="#" data-bs-toggle="modal" data-bs-target="#modal-profile" class="avatar avatar-responsive">
-                                            <img class="avatar-img" src="assets/img/avatars/1.jpg" alt="">
+                                            {{-- <img class="avatar-img" src="assets/img/avatars/1.jpg" alt=""> --}}
                                         </a>
 
                                         <div class="message-inner">
@@ -2825,7 +2825,7 @@
                                     <!-- Message -->
                                     <div class="message">
                                         <a href="#" data-bs-toggle="modal" data-bs-target="#modal-user-profile" class="avatar avatar-responsive">
-                                            <img class="avatar-img" src="assets/img/avatars/11.jpg" alt="">
+                                            {{-- <img class="avatar-img" src="assets/img/avatars/11.jpg" alt=""> --}}
                                         </a>
 
                                         <div class="message-inner">
@@ -2890,7 +2890,7 @@
                                     <!-- Message -->
                                     <div class="message message-out">
                                         <a href="#" data-bs-toggle="modal" data-bs-target="#modal-profile" class="avatar avatar-responsive">
-                                            <img class="avatar-img" src="assets/img/avatars/1.jpg" alt="">
+                                            {{-- <img class="avatar-img" src="assets/img/avatars/1.jpg" alt=""> --}}
                                         </a>
 
                                         <div class="message-inner">
@@ -2950,7 +2950,7 @@
                                     <!-- Message -->
                                     <div class="message">
                                         <a href="#" data-bs-toggle="modal" data-bs-target="#modal-user-profile" class="avatar avatar-online avatar-responsive">
-                                            <img class="avatar-img" src="assets/img/avatars/7.jpg" alt="">
+                                            {{-- <img class="avatar-img" src="assets/img/avatars/7.jpg" alt=""> --}}
                                         </a>
 
                                         <div class="message-inner">
@@ -3054,7 +3054,7 @@
                                     <!-- Message -->
                                     <div class="message message-out">
                                         <a href="#" data-bs-toggle="modal" data-bs-target="#modal-profile" class="avatar avatar-responsive">
-                                            <img class="avatar-img" src="assets/img/avatars/1.jpg" alt="">
+                                            {{-- <img class="avatar-img" src="assets/img/avatars/1.jpg" alt=""> --}}
                                         </a>
 
                                         <div class="message-inner">
@@ -3114,7 +3114,7 @@
                                     <!-- Message -->
                                     <div class="message">
                                         <a href="#" data-bs-toggle="modal" data-bs-target="#modal-user-profile" class="avatar avatar-responsive">
-                                            <img class="avatar-img" src="assets/img/avatars/11.jpg" alt="">
+                                            {{-- <img class="avatar-img" src="assets/img/avatars/11.jpg" alt=""> --}}
                                         </a>
 
                                         <div class="message-inner">
@@ -3174,7 +3174,7 @@
                                     <!-- Message -->
                                     <div class="message message-out">
                                         <a href="#" data-bs-toggle="modal" data-bs-target="#modal-profile" class="avatar avatar-responsive">
-                                            <img class="avatar-img" src="assets/img/avatars/1.jpg" alt="">
+                                            {{-- <img class="avatar-img" src="assets/img/avatars/1.jpg" alt=""> --}}
                                         </a>
 
                                         <div class="message-inner">
@@ -3234,7 +3234,7 @@
                                     <!-- Message -->
                                     <div class="message">
                                         <a href="#" data-bs-toggle="modal" data-bs-target="#modal-user-profile" class="avatar avatar-online avatar-responsive">
-                                            <img class="avatar-img" src="assets/img/avatars/7.jpg" alt="">
+                                            {{-- <img class="avatar-img" src="assets/img/avatars/7.jpg" alt=""> --}}
                                         </a>
 
                                         <div class="message-inner">
@@ -3400,7 +3400,7 @@
                                         <!-- Avatar -->
                                         <div class="col-auto">
                                             <a href="#" class="avatar avatar-online">
-                                                <img class="avatar-img" src="assets/img/avatars/1.jpg" alt="">
+                                                {{-- <img class="avatar-img" src="assets/img/avatars/1.jpg" alt=""> --}}
                                             </a>
                                         </div>
                                         <!-- Avatar -->
@@ -3463,7 +3463,7 @@
                                         <!-- Avatar -->
                                         <div class="col-auto">
                                             <a href="#" class="avatar avatar-online">
-                                                <img class="avatar-img" src="assets/img/avatars/11.jpg" alt="">
+                                                {{-- <img class="avatar-img" src="assets/img/avatars/11.jpg" alt=""> --}}
                                             </a>
                                         </div>
                                         <!-- Avatar -->
@@ -3520,7 +3520,7 @@
                                         <!-- Avatar -->
                                         <div class="col-auto">
                                             <a href="#" class="avatar">
-                                                <img class="avatar-img" src="assets/img/avatars/6.jpg" alt="">
+                                                {{-- <img class="avatar-img" src="assets/img/avatars/6.jpg" alt=""> --}}
                                             </a>
                                         </div>
                                         <!-- Avatar -->
@@ -3577,7 +3577,7 @@
                                         <!-- Avatar -->
                                         <div class="col-auto">
                                             <a href="#" class="avatar">
-                                                <img class="avatar-img" src="assets/img/avatars/8.jpg" alt="">
+                                                {{-- <img class="avatar-img" src="assets/img/avatars/8.jpg" alt=""> --}}
                                             </a>
                                         </div>
                                         <!-- Avatar -->
@@ -3837,7 +3837,7 @@
                                         <div class="col-auto">
                                             <div class="avatar-group">
                                                 <a href="#" class="avatar avatar-sm">
-                                                    <img class="avatar-img" src="assets/img/avatars/6.jpg" alt="#">
+                                                    {{-- <img class="avatar-img" src="assets/img/avatars/6.jpg" alt="#"> --}}
                                                 </a>
 
                                                 <a href="#" class="avatar avatar-sm">
@@ -3914,7 +3914,7 @@
                                         <div class="col-auto">
                                             <div class="avatar-group">
                                                 <a href="#" class="avatar avatar-sm">
-                                                    <img class="avatar-img" src="assets/img/avatars/5.jpg" alt="#">
+                                                    {{-- <img class="avatar-img" src="assets/img/avatars/5.jpg" alt="#"> --}}
                                                 </a>
 
                                                 <a href="#" class="avatar avatar-sm">
@@ -3991,7 +3991,7 @@
                                         <div class="col-auto">
                                             <div class="avatar-group">
                                                 <a href="#" class="avatar avatar-sm">
-                                                    <img class="avatar-img" src="assets/img/avatars/11.jpg" alt="#">
+                                                    {{-- <img class="avatar-img" src="assets/img/avatars/11.jpg" alt="#"> --}}
                                                 </a>
 
                                                 <a href="#" class="avatar avatar-sm">
@@ -4068,7 +4068,7 @@
                                         <div class="col-auto">
                                             <div class="avatar-group">
                                                 <a href="#" class="avatar avatar-sm">
-                                                    <img class="avatar-img" src="assets/img/avatars/3.jpg" alt="#">
+                                                    {{-- <img class="avatar-img" src="assets/img/avatars/3.jpg" alt="#"> --}}
                                                 </a>
 
                                                 <a href="#" class="avatar avatar-sm">
@@ -4198,7 +4198,7 @@
                                 <div class="col-auto">
                                     <div class="avatar ">
 
-                                            <img class="avatar-img" src="assets/img/avatars/6.jpg" alt="">
+                                            {{-- <img class="avatar-img" src="assets/img/avatars/6.jpg" alt=""> --}}
 
 
                                     </div>
@@ -4226,7 +4226,7 @@
                                 <div class="col-auto">
                                     <div class="avatar ">
 
-                                            <img class="avatar-img" src="assets/img/avatars/5.jpg" alt="">
+                                            {{-- <img class="avatar-img" src="assets/img/avatars/5.jpg" alt=""> --}}
 
 
                                     </div>
@@ -4278,7 +4278,7 @@
                                 <div class="col-auto">
                                     <div class="avatar avatar-online">
 
-                                            <img class="avatar-img" src="assets/img/avatars/8.jpg" alt="">
+                                            {{-- <img class="avatar-img" src="assets/img/avatars/8.jpg" alt=""> --}}
 
 
                                     </div>
@@ -4306,7 +4306,7 @@
                                 <div class="col-auto">
                                     <div class="avatar ">
 
-                                            <img class="avatar-img" src="assets/img/avatars/11.jpg" alt="">
+                                            {{-- <img class="avatar-img" src="assets/img/avatars/11.jpg" alt=""> --}}
 
 
                                     </div>
@@ -4410,7 +4410,7 @@
                                 <div class="col-auto">
                                     <div class="avatar ">
 
-                                            <img class="avatar-img" src="assets/img/avatars/4.jpg" alt="">
+                                            {{-- <img class="avatar-img" src="assets/img/avatars/4.jpg" alt=""> --}}
 
 
                                     </div>
@@ -4434,7 +4434,7 @@
                                 <div class="col-auto">
                                     <div class="avatar avatar-online">
 
-                                            <img class="avatar-img" src="assets/img/avatars/7.jpg" alt="">
+                                            {{-- <img class="avatar-img" src="assets/img/avatars/7.jpg" alt=""> --}}
 
 
                                     </div>

@@ -7,6 +7,7 @@ use App\Http\Requests\ConversationRequest;
 use App\Models\Conversation;
 use App\Models\User;
 use App\Traits\UploadFile;
+use Illuminate\Contracts\Session\Session;
 use Illuminate\Support\Facades\DB;
 
 class ConversationController extends Controller
@@ -29,6 +30,18 @@ class ConversationController extends Controller
             ])->get();
 
         return view('messanger.includes.conversations', compact('conversations'));
+    }
+
+    public function users()
+    {
+        // whereDoesntHave
+        $users = User::where('id', '<>', auth()->id())->whereDoesntHave('conversations', function($query) {
+            $query->whereHas('users', function($query) {
+                $query->where('user_id', '<>', auth()->id());
+            });
+        })->get();
+
+        return view('messanger.includes.list-users', compact('users'));
     }
 
     public function create()

@@ -3,7 +3,7 @@
         <div class="card-body">
             <div class="row gx-5">
                 <div class="col-auto">
-                    <div class="avatar avatar-online">
+                    <div class="avatar {{ $conversation->users[0]->isOnline() ? 'avatar-online' : '' }} online-status-{{ $conversation->users[0]->id ?? '' }}">
                         <img src="{{ $conversation->image ?? $conversation->users[0]->image }}" alt="#" class="avatar-img">
                     </div>
                 </div>
@@ -15,7 +15,10 @@
                     </div>
 
                     <div class="d-flex align-items-center">
-                        <div class="line-clamp me-auto last-message">{{ $conversation->lastMessage ? $conversation->lastMessage->message : '' }}</div>
+                        <div class="line-clamp me-auto">
+                            <span class="user-typing d-none"> is typing<span class="typing-dots"><span>.</span><span>.</span><span>.</span></span> </span>
+                            <span class="last-message"> {{ $conversation->lastMessage ? $conversation->lastMessage->message : '' }} </span>
+                        </div>
                     </div>
                 </div>
             </div>

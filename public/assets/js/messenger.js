@@ -123,7 +123,6 @@ $(function() {
                                 $('body').find(`.online-status-${user.id}-text`).text('Offline');
                             })
                             .listenForWhisper('typing', (e) => {
-                                console.log(e);
                                 let ele = $('body').find(`.chat-body-inner #conversation_${e.conversation_id}`);
                                 if (e.typing) {
                                     if (ele.find('.user-typing').length == 0)

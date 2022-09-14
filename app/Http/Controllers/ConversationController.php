@@ -34,7 +34,6 @@ class ConversationController extends Controller
 
     public function users()
     {
-        // whereDoesntHave
         $users = User::where('id', '<>', auth()->id())->whereDoesntHave('conversations', function($query) {
             $query->whereHas('users', function($query) {
                 $query->where('user_id', '<>', auth()->id());

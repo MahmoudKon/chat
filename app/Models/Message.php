@@ -21,6 +21,13 @@ class Message extends Model
         );
     }
 
+    protected function message(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => $this->type == 'text' ? $value : "<a href='".asset($value)."' class='btn btn-success'>File</a>",
+        );
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class)->select('id', 'name', 'email', 'image')->withDefault(['name' => 'User', 'email' => 'User', 'image' => '']);

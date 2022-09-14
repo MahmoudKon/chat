@@ -12,7 +12,7 @@
 
                         <!-- Title -->
                         <div class="mb-8">
-                            <h2 class="fw-bold m-0">Friends</h2>
+                            <h2 class="fw-bold m-0">Users</h2>
                         </div>
 
                         <!-- Search -->
@@ -36,26 +36,6 @@
                                         aria-label="Search for messages or users...">
                                 </div>
                             </form>
-
-                            <!-- Invite button -->
-                            <div class="mt-5">
-                                <a href="#" class="btn btn-lg btn-primary w-100 d-flex align-items-center"
-                                    data-bs-toggle="modal" data-bs-target="#modal-invite">
-                                    Find Friends
-
-                                    <span class="icon ms-auto">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" stroke-linejoin="round"
-                                            class="feather feather-user-plus">
-                                            <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                                            <circle cx="8.5" cy="7" r="4"></circle>
-                                            <line x1="20" y1="8" x2="20" y2="14"></line>
-                                            <line x1="23" y1="11" x2="17" y2="11"></line>
-                                        </svg>
-                                    </span>
-                                </a>
-                            </div>
                         </div>
 
                         <div class="card-list users-list"></div>

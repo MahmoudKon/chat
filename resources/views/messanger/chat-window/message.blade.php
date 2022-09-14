@@ -7,7 +7,7 @@
         <div class="message-body">
             <div class="message-content">
                 <div class="message-text">
-                    <p>{{ $message->message }}</p>
+                    <p>{!! $message->message !!}</p>
                 </div>
             </div>
         </div>

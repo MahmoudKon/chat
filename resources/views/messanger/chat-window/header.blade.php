@@ -28,7 +28,7 @@
 
                         <div class="col overflow-hidden">
                             <h5 class="text-truncate">{{ $user->name }}</h5>
-                            <p class="text-truncate">{{ $user->isOnline() ? 'Online' : '' }}</p>
+                            <p class="text-truncate online-status-{{ $conversation->users[0]->id ?? '' }}-text">{{ $user->isOnline() ? 'Online' : 'Offline' }}</p>
                         </div>
                     </div>
                 </div>

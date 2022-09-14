@@ -8,11 +8,14 @@ use App\Http\Requests\MessageRequest;
 use App\Models\Conversation;
 use App\Models\Message;
 use App\Models\User;
+use App\Traits\UploadFile;
 use Illuminate\Support\Facades\DB;
 use Throwable;
 
 class MessageController extends Controller
 {
+    use UploadFile;
+
     public function index($id)
     {
         $conversation = auth()->user()->conversations()->with([
@@ -23,13 +26,13 @@ class MessageController extends Controller
 
         $user = $conversation->users[0];
 
-        return view('messanger.chat-window.index', compact('conversation', 'user'));
+        return response()->json(['view' => view('messanger.chat-window.index', compact('conversation', 'user'))->render(), 'conversation' => $conversation], 200);
     }
 
     public function newChat(User $user)
     {
         $conversation = new Conversation();
-        return view('messanger.chat-window.index', compact('user', 'conversation'));
+        return response()->json(['view' => view('messanger.chat-window.index', compact('conversation', 'user'))->render(), 'conversation' => $conversation], 200);
     }
 
     public function store(MessageRequest $request)
@@ -38,9 +41,11 @@ class MessageController extends Controller
         try {
             $conversation = $this->getConversation($request->conversation_id, $request->user_id);
 
+
             $message = $conversation->messages()->create([
                 'user_id' => auth()->id(),
-                'message' => $request->message
+                'message' => $request->file ? $this->uploadImage($request->file, 'messages') : $request->message ,
+                'type'    => $request->message ? 'text' : 'attachment',
             ]);
 
             $message->users()->attach([

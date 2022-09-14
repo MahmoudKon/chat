@@ -15,6 +15,7 @@ class ConversationController extends Controller
 
     public function index()
     {
+        $this->users();
         if (request()->ajax()) return $this->users();
         return view('messanger.index');
     }
@@ -31,12 +32,20 @@ class ConversationController extends Controller
                     $query->where('useR_id', auth()->id());
                 });
             }
-        ])->get()->sortByDesc(function($user) {
+        ])->paginate(8);
+
+        $next_page = $users->currentPage() + 1;
+        $next_page = $next_page <= $users->lastPage() ? $next_page : null;
+
+        $users = $users->sortByDesc(function($user) {
             if (isset($user->conversations[0]))
                 return $user->conversations[0]->last_message_id;
         });
 
-        return view('messanger.includes.list-users', compact('users'));
+        return response()->json([
+            'view' => view('messanger.includes.list-users', compact('users'))->render(),
+            'next_page' => $next_page
+        ]);
     }
 
     public function create()

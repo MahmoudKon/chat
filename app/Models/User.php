@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -74,5 +75,15 @@ class User extends Authenticatable
     public function isOnline()
     {
         return Cache::has('user-is-online-' . $this->id);
+    }
+
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        // static::addGlobalScope('order', function (Builder $builder) {
+        //     $builder->orderBy('updated_at', 'DESC');
+        // });
     }
 }

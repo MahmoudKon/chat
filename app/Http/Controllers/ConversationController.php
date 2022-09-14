@@ -15,7 +15,6 @@ class ConversationController extends Controller
 
     public function index()
     {
-        $this->users();
         if (request()->ajax()) return $this->users();
         return view('messanger.index');
     }
@@ -29,7 +28,7 @@ class ConversationController extends Controller
         ->with([
             'conversations' => function($query) {
                 $query->whereHas('users', function($query) {
-                    $query->where('useR_id', auth()->id());
+                    $query->where('user_id', auth()->id());
                 });
             }
         ])->paginate(8);

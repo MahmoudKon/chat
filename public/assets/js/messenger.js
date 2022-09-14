@@ -159,7 +159,7 @@ $(function() {
 
 
     // Load Conversations list
-    let jqXHR = {abort: function () {}};
+    let jqXHR = {abort: function () {}}; // init empty object
     let next_page  = 1;
     loadConversations('conversations-list', `?page=${next_page}`);
 
@@ -180,8 +180,8 @@ $(function() {
 
     function updateLastActive(id) {
         $.ajax({
-            url: window.location.href+'/update/last-seen',
-            type: "POST",
+            url: window.location.href+'update/last-seen',
+            type: "get",
             data: {user_id: id},
             success: function (response, textStatus, jqXHR) {
                 console.log(response);

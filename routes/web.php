@@ -25,7 +25,7 @@ Route::get('/welcome', function () {
 
 Route::middleware('auth')->group(function() {
 
-    Route::post('update/last-seen', [ConversationController::class, 'updateLastSeen'])->name('conversations.index');
+    Route::get('update/last-seen', [ConversationController::class, 'updateLastSeen'])->name('conversations.index');
     Route::get('user/{user}/details', [ConversationController::class, 'userDetails'])->name('user.details');
 
     Route::get('/', [ConversationController::class, 'index'])->name('conversations.index');

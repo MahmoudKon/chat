@@ -24,7 +24,7 @@ class Message extends Model
     protected function message(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => $this->type == 'text' ? $value : "<a href='".asset($value)."' class='btn btn-success'>File</a>",
+            get: fn ($value) => $this->type == 'text' ? $value : "<a href='".asset("uploads/messages/$value")."' target='_blank' class='btn btn-success'>File</a>",
         );
     }
 

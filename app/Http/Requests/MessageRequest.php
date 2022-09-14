@@ -24,7 +24,7 @@ class MessageRequest extends FormRequest
     public function rules()
     {
         return [
-            'message'           => 'required_without:file|string',
+            'message'           => 'required_without:file',
             'file'              => 'nullable|file',
             'conversation_id'   => 'nullable|required_without:user_id|exists:conversations,id',
             'user_id'           => 'nullable|required_without:conversation_id|exists:users,id',

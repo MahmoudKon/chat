@@ -5,7 +5,7 @@
     <!-- Chat: Files -->
 
     <!-- Chat: Form -->
-    <form method="POST" action="{{ route('message.store') }}" id='send-message' class="chat-form rounded-pill bg-dark" data-emoji-form="">
+    <form method="POST" action="{{ route('message.store') }}" id='send-message' class="chat-form rounded-pill bg-dark" data-emoji-form="" enctype="multipart/form-data">
         @csrf
 
         <input type="hidden" name="conversation_id" value="{{ $conversation->id }}">

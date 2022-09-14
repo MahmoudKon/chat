@@ -56,7 +56,10 @@ $(function() {
         $.ajax({
             url: $(this).attr('action'),
             type: $(this).attr('method'),
-            data: $(this).serialize(),
+            data: new FormData($(this)[0]),
+            dataType: 'JSON',
+            processData: false,
+            contentType: false,
             success: function(response, textStatus, jqXHR) {
                 $('[name="message"]').val('');
 
@@ -164,7 +167,9 @@ $(function() {
         }
 
         let conversation = $('body').find(`[data-conversation-id=${message.conversation_id}]`);
-        conversation.find('.last-message').text(message.message);
+        let sender = message.user_id == AUTH_USER_ID ? 'You: ' : `${message.user.name}: `;
+        let msg = message.type == 'text' ? message.message : 'Send File';
+        conversation.find('.last-message').text(sender + ' ' + msg);
         conversation.find('.message-time').text(message.created_at);
         $('.conversations-list').prepend(conversation.get(0));
     }
@@ -194,6 +199,7 @@ $(function() {
 
 
     function conversationTemplate (message, conversation) {
+        console.log(message.type);
         return `<a href="/conversations/${conversation.id}/messages" class="card conversation-item border-0 text-reset user-room" data-conversation-id="${conversation.id}">
                     <div class="card-body">
                         <div class="row gx-5">
@@ -212,7 +218,7 @@ $(function() {
                                 <div class="d-flex align-items-center">
                                     <div class="line-clamp me-auto">
                                         <span class="user-typing d-none"> is typing<span class="typing-dots"><span>.</span><span>.</span><span>.</span></span> </span>
-                                        <span class="last-message"> ${message.message} </span>
+                                        <span class="last-message"> ${message.type == 'text' ? message.message : 'Send File'} </span>
                                     </div>
                                 </div>
                             </div>

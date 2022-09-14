@@ -11,13 +11,24 @@
                 <div class="col">
                     <div class="d-flex align-items-center mb-3">
                         <h5 class="me-auto mb-0">{{ $conversation->label ?? $conversation->users[0]->name }}</h5>
-                        <span class="text-muted extra-small ms-2 message-time">{{ $conversation->lastMessage ? $conversation->lastMessage->created_at : '' }}</span>
+                        <span class="text-muted extra-small ms-2 message-time">
+                            {{ $conversation->lastMessage ? $conversation->lastMessage->created_at : '' }}
+                        </span>
                     </div>
 
                     <div class="d-flex align-items-center">
                         <div class="line-clamp me-auto">
                             <span class="user-typing d-none"> is typing<span class="typing-dots"><span>.</span><span>.</span><span>.</span></span> </span>
-                            <span class="last-message"> {{ $conversation->lastMessage ? $conversation->lastMessage->message : '' }} </span>
+                            <span class="last-message">
+                                {{ $conversation->lastMessage->user_id == auth()->id() ? 'You: ' : auth()->user()->name.': ' }}
+                                @if ($conversation->lastMessage)
+                                    @if ($conversation->lastMessage->type == 'text')
+                                        {{ $conversation->lastMessage->message }}
+                                    @else
+                                        File
+                                    @endif
+                                @endif
+                            </span>
                         </div>
                     </div>
                 </div>

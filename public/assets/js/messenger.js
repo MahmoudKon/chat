@@ -175,7 +175,7 @@ $(function() {
 
     function messageTemplate(message, new_class = '') {
         return `<div class="message ${new_class}">
-                    <a href="#" data-bs-toggle="modal" data-bs-target="#modal-user-profile" class="avatar avatar-responsive">
+                    <a href="/user/${message.user_id}/details" data-bs-toggle="modal" data-bs-target="#modal-user-profile" class="avatar avatar-responsive">
                         <img class="avatar-img" src="${message.user.image}" alt="">
                     </a>
 

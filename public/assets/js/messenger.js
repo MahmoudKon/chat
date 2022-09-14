@@ -34,7 +34,7 @@ $(function() {
         loadConversations('users-list', 'list/users', true);
     });
 
-    let conversation = null;
+    let conversation_user_id = null;
     $('body').on('click', '.user-room', function(e) {
         e.preventDefault();
         $('.user-room').not($(this)).removeClass('open-chat');
@@ -44,7 +44,7 @@ $(function() {
             type: "get",
             success: function(response, textStatus, jqXHR) {
                 $('#load-chat').empty().append(response.view);
-                conversation = response.conversation;
+                conversation_user_id = $('body').find('[data-conversation-user]').data('conversation-user');
                 $('#load-chat .chat-body').animate({scrollTop: $('#load-chat .chat-body').prop("scrollHeight")}, 100);
             }
         });
@@ -62,19 +62,9 @@ $(function() {
             contentType: false,
             success: function(response, textStatus, jqXHR) {
                 $('[name="message"]').val('');
-
-                if (response.new_conversation) {
-                    $('#load-chat').find('#conversation_').attr('id', `conversation_${response.message.conversation_id}`);
-                    $(`.conversations-list`).prepend(response.new_conversation);
-                    $('body').find('input[name="conversation_id"]').val(response.message.conversation_id);
-                } else {
-                    reOrder(response.message);
-                }
-
-                $('#load-chat').find(`#conversation_${response.message.conversation_id}`).append(response.view);
+                reOrder(response.message, response.user_id);
+                $('#load-chat').find(`[data-conversation-user='${response.user_id}']`).append(messageTemplate(response.message, 'message-out'));
                 $('#load-chat .chat-body').animate({scrollTop: $('#load-chat .chat-body').prop("scrollHeight")}, 100);
-
-                $('body').find('.user-item.open-chat').remove();
             }
         });
     });
@@ -88,14 +78,14 @@ $(function() {
     $('body').on('keydown', '[name="message"]', function(){
         chatChannel.whisper('typing', {
             typing: true,
-            conversation_id: conversation.id
+            user_id: AUTH_USER_ID
         });
 
         if (time) clearTimeout(time);
         time = setTimeout( () => {
             chatChannel.whisper('typing', {
                 typing: false,
-                conversation_id: conversation.id
+                user_id: AUTH_USER_ID
             });
         }, 600);
     });
@@ -108,8 +98,9 @@ $(function() {
     // To get message from pusher and append it
     window.Echo.private(`new-message.${AUTH_USER_ID}`)
         .listen('MessageCreated', (data) => {
-            reOrder(data.message);
-            let conversation_body = $('body').find(`#conversation_${data.message.conversation_id}`);
+            $('body').find(`[data-conversation-user="${conversation_user_id}"]`).find('.user-typing').remove();
+            reOrder(data.message, data.message.user_id);
+            let conversation_body = $('body').find(`[data-conversation-user="${data.message.user_id}"]`);
             if (conversation_body.length == 0) return;
 
             conversation_body.append(messageTemplate(data.message));
@@ -124,9 +115,11 @@ $(function() {
                             .leaving((user) => { // This user is leaving to chat page
                                 $('body').find(`.online-status-${user.id}`).removeClass('avatar-online');
                                 $('body').find(`.online-status-${user.id}-text`).text('Offline');
+                                updateLastActive(user.id);
                             })
                             .listenForWhisper('typing', (e) => {
-                                let ele = $('body').find(`.chat-body-inner #conversation_${e.conversation_id}`);
+                                let ele = $('body').find(`[data-conversation-user="${e.user_id}"]`);
+                                if (ele.length == 0) return;
                                 if (e.typing) {
                                     if (ele.find('.user-typing').length == 0)
                                         ele.append(typing());
@@ -157,26 +150,31 @@ $(function() {
         });
     }
 
-
-    // Reorder conversation according last send message
-    function reOrder(message) {
-        let ele = $('body').find(`.conversation-item[data-conversation-id="${message.conversation_id}"]`);
-        if (ele.length == 0) {
-            $('.conversations-list').prepend(conversationTemplate(message, message.conversation));
-            return;
-        }
-
-        let conversation = $('body').find(`[data-conversation-id=${message.conversation_id}]`);
-        let sender = message.user_id == AUTH_USER_ID ? 'You: ' : `${message.user.name}: `;
-        let msg = message.type == 'text' ? message.message : 'Send File';
-        conversation.find('.last-message').text(sender + ' ' + msg);
-        conversation.find('.message-time').text(message.created_at);
-        $('.conversations-list').prepend(conversation.get(0));
+    function updateLastActive(id) {
+        $.ajax({
+            url: window.location.href+'/update/last-seen',
+            type: "POST",
+            data: {user_id: id},
+            success: function (response, textStatus, jqXHR) {
+                console.log(response);
+            }
+        });
     }
 
 
-    function messageTemplate(message) {
-        return `<div class="message">
+    // Reorder conversation according last send message
+    function reOrder(message, user_id) {
+        let ele = $('body').find(`.user-room[data-user-id="${user_id}"]`);
+        let sender = message.user_id == AUTH_USER_ID ? 'You: ' : `${message.user.name}: `;
+        let msg = message.type == 'text' ? message.message : 'Send File';
+        ele.find('.last-message').text(sender + ' ' + msg);
+        ele.find('.message-time').text(message.created_at);
+        $('.conversations-list').prepend(ele.get(0));
+    }
+
+
+    function messageTemplate(message, new_class = '') {
+        return `<div class="message ${new_class}">
                     <a href="#" data-bs-toggle="modal" data-bs-target="#modal-user-profile" class="avatar avatar-responsive">
                         <img class="avatar-img" src="${message.user.image}" alt="">
                     </a>
@@ -185,7 +183,7 @@ $(function() {
                         <div class="message-body">
                             <div class="message-content">
                                 <div class="message-text">
-                                    <p>${message.message}</p>
+                                    <p>${message.message} </p>
                                 </div>
                             </div>
                         </div>
@@ -196,37 +194,6 @@ $(function() {
                     </div>
                 </div>`;
     }
-
-
-    function conversationTemplate (message, conversation) {
-        console.log(message.type);
-        return `<a href="/conversations/${conversation.id}/messages" class="card conversation-item border-0 text-reset user-room" data-conversation-id="${conversation.id}">
-                    <div class="card-body">
-                        <div class="row gx-5">
-                            <div class="col-auto">
-                                <div class="avatar avatar-online online-status-${message.user_id}">
-                                    <img src="${conversation.image ?? message.user.image}" alt="#" class="avatar-img">
-                                </div>
-                            </div>
-
-                            <div class="col">
-                                <div class="d-flex align-items-center mb-3">
-                                    <h5 class="me-auto mb-0">${conversation.label ?? message.user.name}</h5>
-                                    <span class="text-muted extra-small ms-2 message-time">${message.created_at}</span>
-                                </div>
-
-                                <div class="d-flex align-items-center">
-                                    <div class="line-clamp me-auto">
-                                        <span class="user-typing d-none"> is typing<span class="typing-dots"><span>.</span><span>.</span><span>.</span></span> </span>
-                                        <span class="last-message"> ${message.type == 'text' ? message.message : 'Send File'} </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div><!-- .card-body -->
-                </a>`;
-    }
-
 
     function typing() {
         return `<div class="message user-typing">
@@ -241,4 +208,16 @@ $(function() {
                     </div>
                 </div>`;
     }
+
+    $('body').on('click', '[data-bs-target]', function(e) {
+        e.preventDefault();
+        let btn = $(this);
+        $.ajax({
+            url: btn.attr('href'),
+            type: "get",
+            success: function (response, textStatus, jqXHR) {
+                $(`${btn.data('bs-target')}`).find('.modal-content').empty().append(response);
+            }
+        });
+    })
 });

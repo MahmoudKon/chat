@@ -16,17 +16,19 @@ class MessageController extends Controller
 {
     use UploadFile;
 
-    public function index($id)
+    public function index(User $user)
     {
-        $conversation = auth()->user()->conversations()->with([
-            'lastMessage',
-            'users' => function($query) {
-                $query->where('user_id', '<>', auth()->id());
-            }])->where('conversation_id', $id)->first();
+        $conversation = auth()->user()->conversations()->whereHas('users', function($query) use($user) {
+                                $query->where('user_id', $user->id);
+                            })
+                            ->with([
+                                'messages',
+                                'users' => function($query) use($user) {
+                                    $query->where('user_id', '<>', auth()->id());
+                            }])->first();
 
-        $user = $conversation->users[0];
-
-        return response()->json(['view' => view('messanger.chat-window.index', compact('conversation', 'user'))->render(), 'conversation' => $conversation], 200);
+        $conversation = $conversation ?? new Conversation();
+        return response()->json(['view' => view('messanger.chat-window.index', compact('conversation', 'user'))->render()], 200);
     }
 
     public function newChat(User $user)
@@ -57,18 +59,11 @@ class MessageController extends Controller
             DB::commit();
 
             $message->load(['user', 'conversation', 'conversation.users' => function($query) { $query->where('user_id', '<>', auth()->id()); }]);
-            foreach ($conversation->users()->where('user_id', '<>', auth()->id())->pluck('user_id') as $user_id) {
-                broadcast(new MessageCreated($message, $user_id));
-            }
-
-            $new_conversation = false;
-            if (! $request->conversation_id) {
-                $new_conversation = view('messanger.includes.conversations', ['conversations' => [$message->conversation]])->render();
-            }
+            broadcast(new MessageCreated($message, $request->user_id));
             return [
-                'new_conversation' => $new_conversation,
-                'message' => $message,
-                'view'    => view('messanger.chat-window.message', compact('message'))->render()
+                'user_id'    => $request->user_id,
+                'message' => $message
+                // 'view'    => view('messanger.chat-window.message', compact('message'))->render()
             ];
         } catch (Throwable $e) {
             DB::rollBack();
@@ -85,13 +80,13 @@ class MessageController extends Controller
     protected function getConversation($conversation_id = null, $user_id = null)
     {
         if ($conversation_id) {
-            $conversation = auth()->user()->conversations()->with('messages')->find($conversation_id);
+            $conversation = auth()->user()->conversations()->find($conversation_id);
         } else {
-            $conversation = auth()->user()->conversations()->with('messages')
-                            ->where('type', 'peer')
-                            ->whereHas('users', function($query) use($user_id) {
-                                $query->where('user_id', $user_id);
-                            })->first();
+            $conversation = auth()->user()->conversations()
+                                ->where('type', 'peer')
+                                ->whereHas('users', function($query) use($user_id) {
+                                    $query->where('user_id', $user_id);
+                                })->first();
         }
 
         if (! $conversation) {

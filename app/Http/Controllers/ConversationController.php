@@ -7,7 +7,6 @@ use App\Http\Requests\ConversationRequest;
 use App\Models\Conversation;
 use App\Models\User;
 use App\Traits\UploadFile;
-use Illuminate\Contracts\Session\Session;
 use Illuminate\Support\Facades\DB;
 
 class ConversationController extends Controller
@@ -16,29 +15,22 @@ class ConversationController extends Controller
 
     public function index()
     {
-        if (request()->ajax()) return $this->conversations();
+        if (request()->ajax()) return $this->users();
         return view('messanger.index');
-    }
-
-    public function conversations()
-    {
-        $conversations = auth()->user()->conversations()->with([
-            'lastMessage',
-            'users' => function($query) {
-                $query->where('user_id', '<>', auth()->id());
-            }
-            ])->get();
-
-        return view('messanger.includes.conversations', compact('conversations'));
     }
 
     public function users()
     {
-        $users = User::where('id', '<>', auth()->id())->whereDoesntHave('conversations', function($query) {
-            $query->whereHas('users', function($query) {
-                $query->where('user_id', '<>', auth()->id());
-            });
-        })->get();
+        $users = User::where('id', '<>', auth()->id())->with([
+            'conversations' => function($query) {
+                $query->whereHas('users', function($query) {
+                    $query->where('useR_id', auth()->id());
+                });
+            }
+        ])->get()->sortByDesc(function($user) {
+            if (isset($user->conversations[0]))
+                return $user->conversations[0]->last_message_id;
+        });
 
         return view('messanger.includes.list-users', compact('users'));
     }
@@ -81,8 +73,14 @@ class ConversationController extends Controller
             ], 200);
     }
 
-    public function show(Conversation $conversation)
+    public function updateLastSeen()
     {
-        return $conversation->load('users');
+        User::find(request('user_id'))->update(['last_seen' => now()]);
+        return 'updated';
+    }
+
+    public function userDetails(User $user)
+    {
+        return view('messanger.user.show', compact('user'));
     }
 }

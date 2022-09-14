@@ -6,7 +6,7 @@
         <!-- Chat: Content -->
         <div class="chat-body hide-scrollbar flex-1 h-100">
             <div class="chat-body-inner" style="padding-bottom: 45px">
-                <div class="py-6 py-lg-12" id="conversation_{{ $conversation->id }}">
+                <div class="py-6 py-lg-12" data-conversation-user='{{ $user->id }}'>
 
                     @if ($conversation)
                         @foreach ($conversation->messages->sortBy('id') as $message)

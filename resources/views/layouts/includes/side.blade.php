@@ -32,7 +32,7 @@
                                     </div>
 
                                     <input type="text" class="form-control form-control-lg ps-0"
-                                        placeholder="Search messages or users"
+                                        placeholder="Search messages or users" id="search"
                                         aria-label="Search for messages or users...">
                                 </div>
                             </form>

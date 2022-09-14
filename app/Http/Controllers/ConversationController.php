@@ -21,7 +21,11 @@ class ConversationController extends Controller
 
     public function users()
     {
-        $users = User::where('id', '<>', auth()->id())->with([
+        $users = User::where('id', '<>', auth()->id())
+        ->when(request('search'), function($query) {
+            $query->where('name', 'LIKE', '%'.request('search').'%')->orWhere('email', 'LIKE', '%'.request('search').'%');
+        })
+        ->with([
             'conversations' => function($query) {
                 $query->whereHas('users', function($query) {
                     $query->where('useR_id', auth()->id());

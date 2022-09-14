@@ -1,4 +1,5 @@
 $(function() {
+
     $('#create-conversation').click(function() {
         $.ajax({
             url: '/conversations/create',
@@ -27,11 +28,6 @@ $(function() {
                 $(`[data-conversation-id="${response.conversation_id}"]`).click();
             }
         });
-    });
-
-
-    $('body').on('click', '#tab-friends', function(e) {
-        loadConversations('users-list', 'list/users', true);
     });
 
     let conversation_user_id = null;
@@ -73,6 +69,24 @@ $(function() {
     $('body').on('change', '#input-file', function() {
         $('#send-message').submit();
     });
+
+
+    $('body').on('click', '[data-bs-target]', function(e) {
+        e.preventDefault();
+        let btn = $(this);
+        $.ajax({
+            url: btn.attr('href'),
+            type: "get",
+            success: function (response, textStatus, jqXHR) {
+                $(`${btn.data('bs-target')}`).find('.modal-content').empty().append(response);
+            }
+        });
+    });
+
+    $('body').on('keyup', 'input#search', function(e) {
+        loadConversations('conversations-list', '', {search: $(this).val()}, true);
+    });
+
 
     let time = false;
     $('body').on('keydown', '[name="message"]', function(){
@@ -136,13 +150,15 @@ $(function() {
 
 
     // Load Conversations list
+    let jqXHR = {abort: function () {}};
     loadConversations('conversations-list');
 
-
-    function loadConversations(ele, url = '', empty = false) {
-        $.ajax({
+    function loadConversations(ele, url = '', data = {}, empty = false) {
+        jqXHR.abort();
+        jqXHR = $.ajax({
             url: window.location.href+url,
             type: "GET",
+            data: data,
             success: function (response, textStatus, jqXHR) {
                 if (empty) $(`.${ele}`).empty();
                 $(`.${ele}`).append(response);
@@ -208,16 +224,4 @@ $(function() {
                     </div>
                 </div>`;
     }
-
-    $('body').on('click', '[data-bs-target]', function(e) {
-        e.preventDefault();
-        let btn = $(this);
-        $.ajax({
-            url: btn.attr('href'),
-            type: "get",
-            success: function (response, textStatus, jqXHR) {
-                $(`${btn.data('bs-target')}`).find('.modal-content').empty().append(response);
-            }
-        });
-    })
 });

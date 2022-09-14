@@ -1,4 +1,4 @@
-@foreach ($users as $user)
+@forelse ($users as $user)
     <a href="{{ route('conversation.user.messages', $user) }}" class="card conversation-item border-0 text-reset user-room" data-user-id="{{ $user->id }}">
         <div class="card-body">
             <div class="row gx-5">
@@ -35,4 +35,8 @@
             </div>
         </div><!-- .card-body -->
     </a>
-@endforeach
+@empty
+    <div class="card-body">
+        <h3>No Users</h3>
+    </div><!-- .card-body -->
+@endforelse

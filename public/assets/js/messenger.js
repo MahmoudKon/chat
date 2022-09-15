@@ -73,6 +73,7 @@ $(function() {
             contentType: false,
             success: function(response, textStatus, jqXHR) {
                 $('[name="message"]').val('');
+                $('[name="file"]').val('');
                 reOrder(response.message, response.user_id);
                 $('#load-chat').find(`[data-conversation-user='${response.user_id}']`).append(messageTemplate(response.message, 'message-out'));
                 $('#load-chat .chat-body').animate({scrollTop: $('#load-chat .chat-body').prop("scrollHeight")}, 100);
@@ -154,11 +155,13 @@ $(function() {
     // To get message from pusher and append it
     window.Echo.private(`new-message.${AUTH_USER_ID}`)
         .listen('MessageCreated', (data) => {
-            try { audio.play(); } catch (error) {}
             $('body').find(`[data-conversation-user="${conversation_user_id}"]`).find('.user-typing').remove();
             reOrder(data.message, data.message.user_id);
             let conversation_body = $('body').find(`[data-conversation-user="${data.message.user_id}"]`);
-            if (conversation_body.length == 0) return;
+            if (conversation_body.length == 0) {
+                try { audio.play(); } catch (error) {}
+                return;
+            }
 
             conversation_body.append(messageTemplate(data.message));
             $('#load-chat .chat-body').animate({scrollTop: $('#load-chat .chat-body').prop("scrollHeight")}, 100);

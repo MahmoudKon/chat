@@ -17,7 +17,7 @@ return new class extends Migration
             $table->engine = "InnoDB";
             $table->id();
             $table->text('message');
-            $table->enum('type', ['text', 'attachment'])->default('text');
+            $table->string('type')->default('text');
             $table->foreignId('conversation_id')->constrained('conversations')->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignId('user_id')->nullable()->constrained('users')->cascadeOnUpdate()->nullOnDelete();
             $table->timestamps();

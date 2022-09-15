@@ -6,8 +6,8 @@
     <div class="message-inner">
         <div class="message-body">
             <div class="message-content">
-                <div class="message-text">
-                    <p>{!! $message->message !!}</p>
+                <div class=" {{ $message->type == 'text' ? 'message-text' : '' }}">
+                    <p onload="buildFile(this, '{{ $message->type }}', '{{ $message->message }}')"></p>
                 </div>
             </div>
         </div>
@@ -17,3 +17,5 @@
         </div>
     </div>
 </div>
+
+{{-- Not Used --}}

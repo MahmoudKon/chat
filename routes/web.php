@@ -25,14 +25,16 @@ Route::get('/welcome', function () {
 
 Route::middleware('auth')->group(function() {
 
-    Route::get('update/last-seen', [ConversationController::class, 'updateLastSeen'])->name('conversations.index');
+    Route::get('update/last-seen', [ConversationController::class, 'updateLastSeen'])->name('conversations.updateLastSeen');
     Route::get('user/{user}/details', [ConversationController::class, 'userDetails'])->name('user.details');
 
     Route::get('/', [ConversationController::class, 'index'])->name('conversations.index');
+    Route::get('users', [ConversationController::class, 'users'])->name('users');
     Route::get('conversations/create', [ConversationController::class, 'create'])->name('conversations.create');
     Route::post('conversations', [ConversationController::class, 'store'])->name('conversations.store');
 
     Route::get('conversation/{user}/messages', [MessageController::class, 'index'])->name('conversation.user.messages');
+    Route::get('conversation/{conversation}/messages/load-more', [MessageController::class, 'getMessages'])->name('conversation.load.messages');
     // Route::get('conversations/{conversation}/messages', [MessageController::class, 'index'])->name('conversations.messages.index');
     Route::post('messages', [MessageController::class, 'store'])->name('message.store');
     Route::get('messages/{message}', [MessageController::class, 'show'])->name('message.show');

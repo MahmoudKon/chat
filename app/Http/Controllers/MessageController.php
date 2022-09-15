@@ -22,19 +22,31 @@ class MessageController extends Controller
                                 $query->where('user_id', $user->id);
                             })
                             ->with([
-                                'messages',
-                                'users' => function($query) use($user) {
+                                'users' => function($query) {
                                     $query->where('user_id', '<>', auth()->id());
                             }])->first();
 
-        $conversation = $conversation ?? new Conversation();
-        return response()->json(['view' => view('messanger.chat-window.index', compact('conversation', 'user'))->render()], 200);
+        if ($conversation) {
+            $messages = $conversation->messages()->paginate(5);
+        } else {
+            $messages = [];
+            $conversation = new Conversation();
+        }
+
+        return response()->json(['view' => view('messanger.chat-window.index', compact('conversation', 'user'))->render(), 'conversation' => $conversation] + $this->getMessages($conversation->id), 200);
     }
 
-    public function newChat(User $user)
+    public function getMessages($conversation)
     {
-        $conversation = new Conversation();
-        return response()->json(['view' => view('messanger.chat-window.index', compact('conversation', 'user'))->render(), 'conversation' => $conversation], 200);
+        $messages = Message::where('conversation_id', $conversation)->orderBy('created_at', 'DESC')->paginate(5);
+
+        $next_page = $messages->currentPage() + 1;
+        $next_page = $next_page <= $messages->lastPage() ? $next_page : null;
+
+        return [
+            'messages' => $messages,
+            'next_page' => $next_page
+        ];
     }
 
     public function store(MessageRequest $request)
@@ -46,8 +58,8 @@ class MessageController extends Controller
 
             $message = $conversation->messages()->create([
                 'user_id' => auth()->id(),
+                'type'    => $request->message ? 'text' : $request->file->getMimeType(),
                 'message' => $request->file ? $this->uploadImage($request->file, 'messages') : $request->message ,
-                'type'    => $request->message ? 'text' : 'attachment',
             ]);
 
             $message->users()->attach([

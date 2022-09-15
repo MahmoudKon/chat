@@ -31,11 +31,18 @@ class Conversation extends Model
 
     public function messages()
     {
-        return $this->hasMany(Message::class)->latest();
+        return $this->hasMany(Message::class)->orderBy('created_at', 'DESC');
     }
 
     public function lastMessage()
     {
         return $this->belongsTo(Message::class, 'last_message_id')->with('user')->withDefault();
+    }
+
+    public function scopeOnlyWithAuth($query)
+    {
+        return $query->whereHas('users', function($query) {
+                    $query->where('user_id', auth()->id());
+                });
     }
 }

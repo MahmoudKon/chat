@@ -25,7 +25,7 @@
                                     @if ($user->conversations->first()->lastMessage->type == 'text')
                                         {{ $user->conversations->first()->lastMessage->message }}
                                     @else
-                                        File
+                                        Send {{ $user->conversations->first()->lastMessage->type }}
                                     @endif
                                 @endif
                             </span>

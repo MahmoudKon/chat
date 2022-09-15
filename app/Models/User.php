@@ -77,6 +77,26 @@ class User extends Authenticatable
         return Cache::has('user-is-online-' . $this->id);
     }
 
+    public function scopeExceptAuth($query)
+    {
+        return $query->where('id', '<>', auth()->id());
+    }
+
+    public function scopeSearch($query)
+    {
+        return $query->when(request('search'), function($query) {
+                        $query->where('name', 'LIKE', '%'.request('search').'%')->orWhere('email', 'LIKE', '%'.request('search').'%');
+                    });
+    }
+
+    public function scopeHasConversationWithAuth($query)
+    {
+        return $query->whereHas('conversations', function($query) {
+                            $query->whereHas('users', function($query) {
+                                $query->where('user_id', auth()->id());
+                            });
+                        });
+    }
 
     protected static function boot()
     {

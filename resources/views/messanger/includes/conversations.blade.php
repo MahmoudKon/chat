@@ -25,7 +25,7 @@
                                     @if ($conversation->lastMessage->type == 'text')
                                         {{ $conversation->lastMessage->message }}
                                     @else
-                                        File
+                                        Send {{ $conversation->lastMessage->type }}
                                     @endif
                                 @endif
                             </span>

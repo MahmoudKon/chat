@@ -8,11 +8,11 @@
             <div class="chat-body-inner" style="padding-bottom: 45px">
                 <div class="py-6 py-lg-12" data-conversation-user='{{ $user->id }}'>
 
-                    @if ($conversation)
+                    {{-- @if ($conversation)
                         @foreach ($conversation->messages->sortBy('id') as $message)
                             @include('messanger.chat-window.message')
                         @endforeach
-                    @endif
+                    @endif --}}
 
                 </div>
             </div>

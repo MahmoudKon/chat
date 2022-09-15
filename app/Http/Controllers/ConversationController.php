@@ -15,23 +15,17 @@ class ConversationController extends Controller
 
     public function index()
     {
-        if (request()->ajax()) return $this->users();
+        if (request()->ajax()) return $this->conversations();
         return view('messanger.index');
     }
 
-    public function users()
+    public function conversations()
     {
-        $users = User::where('id', '<>', auth()->id())
-        ->when(request('search'), function($query) {
-            $query->where('name', 'LIKE', '%'.request('search').'%')->orWhere('email', 'LIKE', '%'.request('search').'%');
-        })
-        ->with([
-            'conversations' => function($query) {
-                $query->whereHas('users', function($query) {
-                    $query->where('user_id', auth()->id());
-                });
-            }
-        ])->paginate(8);
+        $users = User::exceptAuth()->search()
+                        ->hasConversationWithAuth()
+                        ->with([
+                            'conversations' => function($query) { $query->onlyWithAuth(); }
+                        ])->paginate(8);
 
         $next_page = $users->currentPage() + 1;
         $next_page = $next_page <= $users->lastPage() ? $next_page : null;
@@ -40,6 +34,22 @@ class ConversationController extends Controller
             if (isset($user->conversations[0]))
                 return $user->conversations[0]->last_message_id;
         });
+
+        return response()->json([
+            'view' => view('messanger.includes.list-users', compact('users'))->render(),
+            'next_page' => $next_page
+        ]);
+    }
+
+    public function users()
+    {
+        $users = User::exceptAuth()->search()
+                        ->with([
+                            'conversations' => function($query) { $query->onlyWithAuth(); }
+                        ])->orderBy('last_seen', 'DESC')->paginate(8);
+
+        $next_page = $users->currentPage() + 1;
+        $next_page = $next_page <= $users->lastPage() ? $next_page : null;
 
         return response()->json([
             'view' => view('messanger.includes.list-users', compact('users'))->render(),

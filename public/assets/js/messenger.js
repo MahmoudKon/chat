@@ -33,17 +33,32 @@ $(function() {
     let conversation_user_id = null;
     $('body').on('click', '.user-room', function(e) {
         e.preventDefault();
-        $('.user-room').not($(this)).removeClass('open-chat');
-        $(this).addClass('open-chat');
+        let btn = $(this);
+        $('.user-room').not(btn).removeClass('open-chat');
+        btn.addClass('open-chat');
         $.ajax({
-            url: $(this).attr('href'),
+            url: btn.attr('href'),
             type: "get",
             success: function(response, textStatus, jqXHR) {
                 $('#load-chat').empty().append(response.view);
-                conversation_user_id = $('body').find('[data-conversation-user]').data('conversation-user');
-                $('#load-chat .chat-body').animate({scrollTop: $('#load-chat .chat-body').prop("scrollHeight")}, 100);
+                conversation_user_id = btn.data('user-id');
+                next_messages_page = response.next_page;
+                conversation_id = response.conversation.id;
+
+                $.each(response.messages.data, function (key, message) {
+                    $('body').find('[data-conversation-user]').prepend(messageTemplate(message, message.user_id == AUTH_USER_ID ? '' : 'message-out'));
+                });
+
+                $('#load-chat .chat-body').animate({scrollTop: $('#load-chat .hide-scrollbar').prop("scrollHeight")}, 200);
             }
         });
+    });
+
+
+    $('#load-chat .hide-scrollbar').scroll(function () {
+        console.log('asdasdasd');
+        // if ( $(this).scrollTop() + $(this).innerHeight() == $(this)[0].scrollHeight && next_messages_page !== null)
+        //     loadMoreMessages(response.conversation.id, conversation_user_id);
     });
 
 
@@ -84,16 +99,22 @@ $(function() {
     });
 
     $('body').on('keyup', 'input#search', function(e) {
-        loadConversations('conversations-list', '', {search: $(this).val()}, true);
-    });
-
-    $('body').on('keyup', 'input#search', function(e) {
-        loadConversations('conversations-list', '?page=1', {search: $(this).val()}, true);
+        loadConversations(1, {search: $(this).val()}, true);
     });
 
     $('#tab-content-chats .hide-scrollbar').scroll(function () {
         if ( $(this).scrollTop() + $(this).innerHeight() == $(this)[0].scrollHeight && next_page !== null)
-            loadConversations('conversations-list', `?page=${next_page}`, {search: $('input#search').val()});
+            loadConversations(next_page, {search: $('input#search').val()});
+    });
+
+
+    $('body').on('keyup', 'input#users-search', function(e) {
+        loadUsers(1, {search: $('input#users-search').val()}, true);
+    });
+
+    $('#tab-content-friends .hide-scrollbar').scroll(function () {
+        if ( $(this).scrollTop() + $(this).innerHeight() == $(this)[0].scrollHeight && next_page !== null)
+            loadUsers(next_page, {search: $('input#users-search').val()});
     });
 
 
@@ -113,6 +134,16 @@ $(function() {
                 user_id: $('input[name="user_id"]').val()
             });
         }, 600);
+    });
+
+
+    $('#tab-friends').click(function() {
+        loadUsers(1, {}, true);
+    });
+
+
+    $('#tab-chats').click(function() {
+        loadConversations(1, {}, true);
     });
 
 
@@ -144,8 +175,8 @@ $(function() {
                             })
                             .listenForWhisper('typing', (e) => {
                                 if (AUTH_USER_ID != e.user_id) return;
-                                toggleTyping(e.typing, e.user_id);
-                                toggleTypingInChat(e.typing, e.user_id);
+                                toggleTyping(e.typing, e.auth_id);
+                                toggleTypingInChat(e.typing, e.auth_id);
                                 $('#load-chat .chat-body').animate({scrollTop: $('#load-chat .chat-body').prop("scrollHeight")}, 100);
                             });
 
@@ -158,20 +189,41 @@ $(function() {
     // Load Conversations list
     let jqXHR = {abort: function () {}}; // init empty object
     let next_page  = 1;
-    loadConversations('conversations-list', `?page=${next_page}`);
+    let next_messages_page = 1;
+    loadConversations();
 
+    function loadConversations(page = 1, data = {}, empty = false) {
+        loadData('conversations-list', `?page=${page}`, data, empty)
+    }
 
-    function loadConversations(ele, url = '', data = {}, empty = false) {
+    function loadUsers(page = 1, data = {}, empty = false) {
+        loadData('users-list', `users?page=${page}`, data, empty)
+    }
+
+    function loadData(ele, url = '', data = {}, empty = false) {
         jqXHR.abort();
         jqXHR = $.ajax({
             url: window.location.href+url,
             type: "GET",
             data: data,
-            success: function (response, textStatus, jqXHR) {
+            success: function (response) {
                 next_page = response.next_page;
                 if (empty) $(`.${ele}`).empty();
                 $(`.${ele}`).append(response.view);
 
+            }
+        });
+    }
+
+    function loadMoreMessages(conversation, user_id) {
+        $.ajax({
+            url: window.location.href+`conversation/${conversation}/messages/load-more?page=${next_messages_page}`,
+            type: "GET",
+            success: function (response) {
+                next_messages_page = response.next_page;
+                $.each(response.messages.data, function (key, message) {
+                    $('body').find(`[data-conversation-user=${user_id}]`).prepend(messageTemplate(message, message.user_id == AUTH_USER_ID ? '' : 'message-out'));
+                });
             }
         });
     }
@@ -182,7 +234,6 @@ $(function() {
             type: "get",
             data: {user_id: id},
             success: function (response, textStatus, jqXHR) {
-                console.log(response);
             }
         });
     }
@@ -192,7 +243,7 @@ $(function() {
     function reOrder(message, user_id) {
         let ele = $('body').find(`.user-room[data-user-id="${user_id}"]`);
         let sender = message.user_id == AUTH_USER_ID ? 'You: ' : `${message.user.name}: `;
-        let msg = message.type == 'text' ? message.message : 'Send File';
+        let msg = message.type == 'text' ? message.message : `Send ${message.type}`;
         ele.find('.last-message').text(sender + ' ' + msg);
         ele.find('.message-time').text(message.created_at);
         $('.conversations-list').prepend(ele.get(0));
@@ -208,8 +259,8 @@ $(function() {
                     <div class="message-inner">
                         <div class="message-body">
                             <div class="message-content">
-                                <div class="message-text">
-                                    <p>${message.message} </p>
+                                <div class="${message.type == 'text' ? 'message-text' : ''}">
+                                    <p>${buildFile (message.type, message.message)} </p>
                                 </div>
                             </div>
                         </div>
@@ -239,7 +290,7 @@ $(function() {
 
     function toggleTyping(check, user_id)
     {
-        let user_item = $('.conversations-list').find(`[data-user-id="${user_id}"]`);
+        let user_item = $('.conversations-list, .users-list').find(`[data-user-id="${user_id}"]`);
         if (user_item.length == 0) return;
         if (check) {
             user_item.find('.last-message').addClass('d-none');
@@ -261,5 +312,34 @@ $(function() {
         } else {
             ele.find('.user-typing').remove();
         }
+    }
+
+    function buildFile (type, src) {
+        if (type == 'text/plain') return `<a href='${src}' target='_blank' class='btn btn-success'> ${type} </a>`;
+        let text = '';
+        let type_array = type.split('/');
+        switch (type_array[0]) {
+            case 'text':
+                text = src;
+            break;
+
+            case 'image':
+                text = `<img src='${src}' width='100%'>`;
+            break;
+
+            case 'audio':
+                text = `<audio controls width='100%'> <source src="${src}"></audio>`;
+            break;
+
+            case 'video':
+                text = `<video width="100%" controls> <source src="${src}"> </video>`;
+            break;
+
+            default:
+                text = `<a href='${src}' target='_blank' class='btn btn-success'> ${type} </a>`;
+                break;
+        }
+
+        return text;
     }
 });

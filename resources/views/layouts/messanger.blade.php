@@ -17,7 +17,6 @@
         <link rel="stylesheet" href="{{ asset('assets') }}/css/template.dark.bundle.css" media="(prefers-color-scheme: dark)">
 
     <body>
-        <h3>{{ auth()->user()->name }}</h3>
         <!-- Layout -->
         <div class="layout overflow-hidden">
             @include('layouts.includes.nav')

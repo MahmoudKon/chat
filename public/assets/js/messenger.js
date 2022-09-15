@@ -101,14 +101,16 @@ $(function() {
     $('body').on('keydown', '[name="message"]', function(){
         chatChannel.whisper('typing', {
             typing: true,
-            user_id: AUTH_USER_ID
+            auth_id: AUTH_USER_ID,
+            user_id: $('input[name="user_id"]').val()
         });
 
         if (time) clearTimeout(time);
         time = setTimeout( () => {
             chatChannel.whisper('typing', {
                 typing: false,
-                user_id: AUTH_USER_ID
+                auth_id: AUTH_USER_ID,
+                user_id: $('input[name="user_id"]').val()
             });
         }, 600);
     });
@@ -141,14 +143,9 @@ $(function() {
                                 updateLastActive(user.id);
                             })
                             .listenForWhisper('typing', (e) => {
-                                let ele = $('body').find(`[data-conversation-user="${e.user_id}"]`);
-                                if (ele.length == 0) return;
-                                if (e.typing) {
-                                    if (ele.find('.user-typing').length == 0)
-                                        ele.append(typing());
-                                } else {
-                                    ele.find('.user-typing').remove();
-                                }
+                                if (AUTH_USER_ID != e.user_id) return;
+                                toggleTyping(e.typing, e.user_id);
+                                toggleTypingInChat(e.typing, e.user_id);
                                 $('#load-chat .chat-body').animate({scrollTop: $('#load-chat .chat-body').prop("scrollHeight")}, 100);
                             });
 
@@ -162,6 +159,7 @@ $(function() {
     let jqXHR = {abort: function () {}}; // init empty object
     let next_page  = 1;
     loadConversations('conversations-list', `?page=${next_page}`);
+
 
     function loadConversations(ele, url = '', data = {}, empty = false) {
         jqXHR.abort();
@@ -223,6 +221,7 @@ $(function() {
                 </div>`;
     }
 
+
     function typing() {
         return `<div class="message user-typing">
                     <div class="message-inner">
@@ -235,5 +234,32 @@ $(function() {
                         </div>
                     </div>
                 </div>`;
+    }
+
+
+    function toggleTyping(check, user_id)
+    {
+        let user_item = $('.conversations-list').find(`[data-user-id="${user_id}"]`);
+        if (user_item.length == 0) return;
+        if (check) {
+            user_item.find('.last-message').addClass('d-none');
+            user_item.find('.user-typing').removeClass('d-none');
+        } else {
+            user_item.find('.last-message').removeClass('d-none');
+            user_item.find('.user-typing').addClass('d-none');
+        }
+    }
+
+
+    function toggleTypingInChat(check, user_id)
+    {
+        let ele = $('body').find(`[data-conversation-user="${user_id}"]`);
+        if (ele.length == 0) return;
+        if (check) {
+            if (ele.find('.user-typing').length == 0)
+                ele.append(typing());
+        } else {
+            ele.find('.user-typing').remove();
+        }
     }
 });

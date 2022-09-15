@@ -12,7 +12,7 @@
                     <div class="d-flex align-items-center mb-3">
                         <h5 class="me-auto mb-0">{{ $user->name }}</h5>
                         <span class="text-muted extra-small ms-2 message-time">
-                            {{ $user->conversation?->lastMessage->created_at }}
+                            {{ $user->conversations->first()?->lastMessage->created_at }}
                         </span>
                     </div>
 
@@ -20,10 +20,10 @@
                         <div class="line-clamp me-auto">
                             <span class="user-typing d-none"> is typing<span class="typing-dots"><span>.</span><span>.</span><span>.</span></span> </span>
                             <span class="last-message">
-                                @if ($user->conversation?->lastMessage)
-                                    {{ $user->conversation->lastMessage->user_id == auth()->id() ? 'You: ' : auth()->user()->name.': ' }}
-                                    @if ($user->conversation->lastMessage->type == 'text')
-                                        {{ $user->conversation->lastMessage->message }}
+                                @if ($user->conversations->first()?->lastMessage)
+                                    {{ $user->conversations->first()->lastMessage->user_id == auth()->id() ? 'You: ' : $user->conversations->first()->lastMessage->user->name.': ' }}
+                                    @if ($user->conversations->first()->lastMessage->type == 'text')
+                                        {{ $user->conversations->first()->lastMessage->message }}
                                     @else
                                         File
                                     @endif

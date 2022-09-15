@@ -35,7 +35,10 @@
         @include('messanger.modals')
 
         <!-- Scripts -->
-        <script> const AUTH_USER_ID = {{ auth()->id() }}; </script>
+        <script>
+            const AUTH_USER_ID = {{ auth()->id() }};
+            audio = new Audio(`{{ asset('assets/audios/success.mp3') }}`);
+        </script>
         <script type="text/javascript" src="{{ asset('assets') }}/js/jquery-3.6.1.min.js"></script>
         <script type="text/javascript" src="{{ asset('assets') }}/js/vendor.js"></script>
         <script type="text/javascript" src="{{ asset('assets') }}/js/template.js"></script>

@@ -46,7 +46,7 @@ $(function() {
                 conversation_id = response.conversation.id;
 
                 $.each(response.messages.data, function (key, message) {
-                    $('body').find('[data-conversation-user]').prepend(messageTemplate(message, message.user_id == AUTH_USER_ID ? '' : 'message-out'));
+                    $('body').find('[data-conversation-user]').prepend(messageTemplate(message, message.user_id == AUTH_USER_ID ? 'message-out' : ''));
                 });
 
                 $('#load-chat .chat-body').animate({scrollTop: $('#load-chat .hide-scrollbar').prop("scrollHeight")}, 200);
@@ -154,6 +154,7 @@ $(function() {
     // To get message from pusher and append it
     window.Echo.private(`new-message.${AUTH_USER_ID}`)
         .listen('MessageCreated', (data) => {
+            try { audio.play(); } catch (error) {}
             $('body').find(`[data-conversation-user="${conversation_user_id}"]`).find('.user-typing').remove();
             reOrder(data.message, data.message.user_id);
             let conversation_body = $('body').find(`[data-conversation-user="${data.message.user_id}"]`);

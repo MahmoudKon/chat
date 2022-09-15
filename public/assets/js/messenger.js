@@ -121,6 +121,8 @@ $(function() {
 
     let time = false;
     $('body').on('keydown', '[name="message"]', function(){
+        if (event.keyCode > 90 || event.keyCode < 65) return;
+
         chatChannel.whisper('typing', {
             typing: true,
             auth_id: AUTH_USER_ID,
